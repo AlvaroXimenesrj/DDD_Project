@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Loja.ProjetoDDD.Application.ViewModels.ClienteViewModel>
+@using Loja.ProjetoDDD.UI.Sistema.Helpers
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<!-- Abaixo, método que só aparecerá o link Create
+    se a claim do Cliente (ModuleCliente) for igual a
+    Cx-->
+@{
+    if (this.IfClaim("ModuloCliente", "CX"))
+    {
+        <p>
+            @Html.ActionLink("Create New", "Create")
+        </p>
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nome)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CPF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DataNascimento)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CPF)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataNascimento)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ClienteId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ClienteId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ClienteId }).IfClaimHelper("ModuloCliente", "CX")
+            </td>                                             <!-- acima, só quem tem a CX poderá ver o botao do link excluir-->
+        </tr>
+    }
+
+</table>
